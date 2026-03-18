@@ -1,0 +1,39 @@
+# Nome da Automação: Validação FarmTech Streamlit
+name: Streamlit App CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    # Simula o Linux Ubuntu (o mesmo que usaremos na AWS São Paulo)
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v3
+
+    - name: Configurar Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Instalar Dependências da FarmTech
+      run: |
+        python -m pip install --upgrade pip
+        # Instala Streamlit, Pandas, Scikit-Learn e as métricas de Regressão
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Validar Sintaxe do App Streamlit
+      run: |
+        # Este comando apenas verifica se o código tem erros de digitação/sintaxe
+        # sem precisar abrir o navegador, garantindo que a API não vai "quebrar" no Linux
+        python -m py_compile app.py 
+
+    - name: Teste de fumaça (Smoke Test)
+      run: |
+        # Verifica se o comando 'streamlit' está acessível no Linux
+        streamlit --version
