@@ -1,0 +1,36 @@
+import pandas as pd
+import numpy as np
+
+# Número de talhões (fazendas) simulados
+n_registros = 600
+
+# Criando o Dataset Mestre
+data = {
+    # 1. PARTE FIAP (Clima e Sensores)
+    'Crop': np.random.choice(['Bambu Guadua', 'Eucalipto', 'Bambu Mossô', 'Pinus', 'Cana-de-Acucar'], n_registros),
+    'Precipitation_mm_day': np.random.uniform(2.0, 18.0, n_registros),
+    'Relative_Humidity_2m': np.random.uniform(50.0, 95.0, n_registros),
+    'Temperature_2m_C': np.random.uniform(18.0, 35.0, n_registros),
+    'Specific_Humidity_2m': np.random.uniform(10.0, 20.0, n_registros),
+
+    # 2. PARTE STARTUP CORINGA ACO(Sua Tese - B2B/ESG/Imposto)
+    'Area_ha': np.random.uniform(10, 500, n_registros), # Aqui trataremos a regra dos < 200ha
+    'Solo_PH': np.random.uniform(4.5, 7.0, n_registros),
+    'Historico_Degradacao': np.random.choice([0, 1], n_registros), # 1 se a terra era pasto degradado
+}
+
+df = pd.DataFrame(data)
+
+# Criando a lógica de 'Yield' (Rendimento) baseada no clima e espécie
+# O Bambu cresce mais com umidade alta
+def calcular_yield(row):
+    base = (row['Precipitation_mm_day'] * 60) + (row['Temperature_2m_C'] * 20)
+    if 'Bambu' in row['Crop']:
+        base *= 1.3 # Bambu é mais eficiente em biomassa rápida
+    return base + np.random.normal(0, 100)
+
+df['Yield_Ton'] = df.apply(calcular_yield, axis=1)
+
+# Salvar para o Repositório
+df.to_csv("crop_yield.csv", index=False)
+print("✅ Commit #1 Preparado: crop_yield.csv gerado com sucesso.")
