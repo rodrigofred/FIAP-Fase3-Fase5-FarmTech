@@ -1,0 +1,45 @@
+# 🌱 FarmTech Solutions - O Coringa do Aço Verde
+
+Este projeto é uma plataforma de **Inteligência de Dados e Sustentabilidade** focada na cultura de Madeiras Nobres e Banbu o Astro. O objetivo é transformar pequenas e médias propriedades agrícolas em potências de sequestro de carbono e lucro B2B, utilizando Machine Learning para prever a viabilidade e garantir incentivos fiscais.
+
+## 🚀 Funcionalidades Principais
+- **Predição de Yield (ML):** Algoritmo de *Random Forest* que utiliza sensores climáticos (Humidade, Precipitação, Temperatura) para prever a biomassa.
+- **Calculadora ESG:** Conversão automática de produtividade em créditos de carbono e ativos ambientais.
+- **Score de Crédito Verde:** Sistema de bonificação com redução de juros (ABC+/Pronaf) para propriedades menores de 200 hectares.
+- **Matchmaking B2B:** Conector inteligente que notifica indústrias de construção e energia sobre a disponibilidade de matéria-prima.
+- **Simulador Fiscal:** Mapeamento de isenções de ICMS e ITR para culturas sustentáveis.
+
+## 🛠️ Tecnologias Utilizadas
+- **Linguagem:** Python
+- **IA/ML:** Scikit-Learn (Pipelines, RandomForestRegressor, StandardScalers)
+- **Dashboard:** Streamlit & Plotly
+- **Engenharia de Dados:** Pandas & Numpy
+
+## 📈 Estrutura de Commits (Roadmap)
+1. `data`: Setup do Dataset Mestre (Clima + Bambu).
+2. `feat`: Engine de Machine Learning (Regras FIAP).
+3. `feat`: Calculadora de Carbono e Score de Crédito.
+4. `feat`: Motor de Isenção Fiscal e Regras B2B.
+5. `feat`: Sistema de Matchmaking e Notificação Industrial.
+6. `ui`: Interface Final do Dashboard Estratégico.
+
+---
+
+### 💡 Nota de Desenvolvimento
+**Este projeto foi desenvolvido em apenas 2 dias** utilizando uma arquitetura de alta performance:
+- **CAG Memory Context** para persistência de conceitos.
+- **Gens:** Monica.ia e DeepSeek para suporte lógico e arquitetura.
+- **Engenharia de Prompts:** Realizada por **My (Rodrigo)** para garantir a sinergia entre o rigor técnico acadêmico e a visão de negócio Startup One.
+
+---
+
+### 👨‍🏫 Como rodar o projeto
+1. Clone o repositório.
+2. Instale as dependências: `pip install -r requirements.txt`.
+3. Execute o app: `streamlit run app.py`.
+
+---
+
+**Com esse README, domina a estratégia de entrega rápida e eficiente.**
+
+Missão totalmente cumprida,no github doing a go
