@@ -1,0 +1,28 @@
+def calcular_impacto_esg(yield_ton, area_ha, cultura):
+    # 1. Cálculo de Carbono (Baseado na sua tese do "Aço Verde")
+    # Bambu sequestra aprox 1.5x seu peso em CO2
+    fator_co2 = 1.5 if 'Bambu' in cultura else 0.8
+    co2_total = yield_ton * fator_co2
+    
+    # 2. Regra de Ouro da Startup: Bonificação para Pequenos (< 200ha)
+    # Se for pequeno produtor e plantar bambu, ganha "Selo Verde" para juros baixos
+    taxa_juros_padrao = 12.5  # % ao ano (exemplo Plano Safra)
+    score_credito_verde = "Básico"
+    
+    if area_ha < 200:
+        if 'Bambu' in cultura:
+            taxa_juros_padrao -= 2.5 # Desconto de 2.5% nos juros (incentivo ABC+)
+            score_credito_verde = "Premium (Acesso Prioritário)"
+        else:
+            taxa_juros_padrao -= 1.0 # Pequeno produtor padrão
+            score_credito_verde = "Elevado"
+            
+    return {
+        'co2_retirado': round(co2_total, 2),
+        'juros_estimado': round(taxa_juros_padrao, 2),
+        'score_esg': score_credito_verde
+    }
+
+# Exemplo de uso que irá para o seu Dashboard
+exemplo_impacto = calcular_impacto_esg(1200, 150, 'Bambu Guadua')
+print(f"Impacto: {exemplo_impacto}")
