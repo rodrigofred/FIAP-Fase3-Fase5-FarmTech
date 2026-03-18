@@ -1,0 +1,27 @@
+def simulador_financeiro_b2b(yield_ton, cultura):
+    # Preços médios de mercado B2B (Fictício para o modelo)
+    precos = {
+        'Bambu Guadua': 280.00, # por tonelada para construção
+        'Eucalipto': 190.00,    # para celulose
+        'Pinus': 150.00,
+        'Bambu Mossô': 320.00   # alto valor agregado
+    }
+    
+    preco_unitario = precos.get(cultura, 100.00)
+    faturamento_bruto = yield_ton * preco_unitario
+    
+    # Aplicando a Isenção de Imposto da sua tese (Redução de carga fiscal)
+    # Se for Bambu (Aço Verde), reduzimos o imposto sobre a venda em 15%
+    imposto_padrao = 0.18 # 18%
+    if 'Bambu' in cultura:
+        imposto_padrao -= 0.10 # Incentivo fiscal "Protocolo Verde"
+        
+    lucro_liquido_estimado = faturamento_bruto * (1 - imposto_padrao)
+    
+    return {
+        'faturamento_bruto': round(faturamento_bruto, 2),
+        'imposto_aplicado': f"{round(imposto_padrao*100, 1)}%",
+        'lucro_liquido': round(lucro_liquido_estimado, 2)
+    }
+
+print(f"Simulação B2B: {simulador_financeiro_b2b(1200, 'Bambu Guadua')}")
