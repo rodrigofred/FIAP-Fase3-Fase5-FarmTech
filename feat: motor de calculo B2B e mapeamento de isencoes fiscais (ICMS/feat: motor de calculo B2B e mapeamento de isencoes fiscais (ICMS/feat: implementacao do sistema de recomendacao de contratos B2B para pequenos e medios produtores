@@ -1,0 +1,30 @@
+def recomendar_compradores_b2b(yield_ton, cultura, area_ha):
+    # Base de dados de perfis de compradores (Simulado para o Pitch)
+    compradores = [
+        {'empresa': 'BioEnergia S.A.', 'setor': 'Energia/Biomassa', 'demanda_minima': 100, 'tipo': 'Pellets'},
+        {'empresa': 'EcoConstruir Ltda', 'setor': 'Construção Civil', 'demanda_minima': 500, 'tipo': 'Vigas de Bambu'},
+        {'empresa': 'PapelVerde Corp', 'setor': 'Celulose', 'demanda_minima': 1000, 'tipo': 'Fibra'},
+        {'empresa': 'Artesanato Global', 'setor': 'Exportação', 'demanda_minima': 10, 'tipo': 'Colmos Premium'}
+    ]
+    
+    recomendados = []
+    
+    for empresa in compradores:
+        # Lógica de Match: Se a produção atende a demanda mínima
+        if yield_ton >= empresa['demanda_minima']:
+            # Prioridade para Pequenos Produtores (< 200ha) em empresas com selo social
+            status_contrato = "Disponível para Negociação"
+            if area_ha < 200:
+                status_contrato = "Prioridade: Programa de Agricultura Familiar"
+            
+            recomendados.append({
+                'Parceiro': empresa['empresa'],
+                'Setor': empresa['setor'],
+                'Finalidade': empresa['tipo'],
+                'Status': status_contrato
+            })
+            
+    return recomendados
+
+# Exemplo de saída para o Dashboard
+print(f"Empresas prontas para contrato: {recomendar_compradores_b2b(1200, 'Bambu Guadua', 150)}")
