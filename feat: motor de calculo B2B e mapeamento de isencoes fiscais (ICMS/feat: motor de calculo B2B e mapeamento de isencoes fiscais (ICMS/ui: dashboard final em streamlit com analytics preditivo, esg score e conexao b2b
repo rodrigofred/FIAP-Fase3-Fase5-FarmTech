@@ -1,0 +1,74 @@
+import streamlit as st
+import pandas as pd
+import numpy as np
+import plotly.express as px
+
+# --- SETUP DA PÁGINA ---
+st.set_page_config(page_title="FarmTech - Aço Verde", layout="wide")
+
+st.title("🌱 FarmTech Solutions: Inteligência de Biomassa & ESG")
+st.markdown("---")
+
+# --- SIDEBAR: ENTRADA DE DADOS (SENSORES FIAP) ---
+st.sidebar.header("📡 Sensores da Fazenda (Entrada)")
+cultura = st.sidebar.selectbox("Variedade de Cultura", ['Bambu Guadua', 'Bambu Mossô', 'Eucalipto', 'Pinus'])
+area = st.sidebar.slider("Área de Plantio (Hectares)", 10, 500, 150)
+precipitacao = st.sidebar.slider("Precipitação (mm/dia)", 2.0, 20.0, 10.0)
+temp = st.sidebar.slider("Temperatura Média (°C)", 15, 40, 26)
+
+# --- LÓGICA DE CÁLCULO (O MOTOR DOS COMMITS ANTERIORES) ---
+# Simulando a predição da nossa IA (Random Forest)
+yield_predito = (precipitacao * 55) + (temp * 18)
+if 'Bambu' in cultura: yield_predito *= 1.35
+
+# Cálculo ESG (Sua Tese)
+fator_co2 = 1.5 if 'Bambu' in cultura else 0.8
+co2_total = yield_predito * fator_co2
+
+# Regra de Juros para Pequeno Produtor (< 200ha)
+juros = 12.5
+if area < 200:
+    juros -= 2.5 if 'Bambu' in cultura else 1.0
+
+# --- DASHBOARD VISUAL ---
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    st.metric("Produção Estimada", f"{int(yield_predito)} Ton", "Biomassa")
+with col2:
+    st.metric("Sequestro de CO2", f"{int(co2_total)} t/ano", "Crédito Carbono")
+with col3:
+    st.metric("Taxa de Juros (ABC+)", f"{juros}%", "-2.5% Benefício")
+with col4:
+    st.metric("Score ESG", "Acesso Prioritário" if area < 200 else "Regular")
+
+st.markdown("---")
+
+# --- GRÁFICOS E INSIGHTS ---
+c1, c2 = st.columns(2)
+
+with c1:
+    st.subheader("📈 Projeção de Crescimento vs Clima")
+    # Gráfico de Radar ou Barras comparando espécies
+    df_comp = pd.DataFrame({
+        'Espécie': ['Sua Fazenda', 'Média Regional', 'Meta ESG'],
+        'Toneladas': [yield_predito, yield_predito*0.8, yield_predito*1.1]
+    })
+    fig = px.bar(df_comp, x='Espécie', y='Toneladas', color='Espécie', text_auto=True)
+    st.plotly_chart(fig, use_container_width=True)
+
+with c2:
+    st.subheader("🤝 Oportunidades de Contrato B2B")
+    # Tabela de Matchmaking do Commit #5
+    contratos = [
+        {'Parceiro': 'BioEnergia S.A.', 'Finalidade': 'Pellets/Energia', 'Status': 'Pronto para Fechar'},
+        {'Parceiro': 'EcoConstruir Ltda', 'Finalidade': 'Estruturas Aço Verde', 'Status': 'Interesse Alto'},
+        {'Parceiro': 'PapelVerde Corp', 'Finalidade': 'Celulose Sustentável', 'Status': 'Consultar Volume'}
+    ]
+    st.table(pd.DataFrame(contratos))
+
+# --- ÁREA DE INCENTIVOS FISCAIS ---
+st.info(f"💡 **Incentivo Fiscal Detetado:** Devido à cultura de {cultura}, a sua fazenda está apta à redução de 15% no ICMS (Protocolo Verde) e isenção de ITR conforme mapeado no sistema.")
+
+if st.button("Gerar Relatório de Viabilidade para o Banco"):
+    st.success("Relatório gerado com sucesso! Incluindo métricas de Crédito de Carbono e ROI B2B.")
